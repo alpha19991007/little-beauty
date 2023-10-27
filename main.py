@@ -157,7 +157,7 @@ def get_birthday(birthday, year, today):
     return birth_day
 
 
-def send_message(to_user, access_token, region_name, weather, temp, wind_dir, max_temp, min_temp,
+def send_message(to_user, access_token, region_name, weather, temp, wind_dir, minmax_tmp,
                  sunrise, sunset, category, pm2p5, proposal, chp, stardata):
     url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={}".format(
         access_token)
@@ -269,5 +269,5 @@ if __name__ == "__main__":
     chp = get_tianhang()
     users = config['user']
     for user in users:
-        send_message(user, accessToken, _region, weather, temp, wind_dir, max_temp, min_temp, sunrise, sunset, category, pm2p5, proposal, chp, stardata)
+        send_message(user, accessToken, _region, weather, temp, wind_dir, minmax_tmp, sunrise, sunset, category, pm2p5, proposal, chp, stardata)
     print(stardata)
