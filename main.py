@@ -180,6 +180,8 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, ma
         if k[0:5] == "birth":
             birthdays[k] = v
     print(chp)
+    star1, star2 = get_two_test(stardata.get('今日概述'))
+    star2, star3 = get_two_test(star2)
     data = {
         "touser": to_user,
         "template_id": config["template_id"],
@@ -195,9 +197,8 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, ma
             "minmax_tmp": {
                 "value": f"{min_temp} ～ {max_temp}"
             },
-            "wind_dir": {"value": wind_dir},
             "category": {
-                "value": f"{category} pm2.5: {pm2p5}"
+                "value": f"{category} {wind_dir} pm2.5: {pm2p5}"
             },
             "sun": {
                 "value": f"{sunrise} - {sunset}"
@@ -222,10 +223,13 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, ma
                 "value": f"{stardata.get('幸运数字')} 贵人星座: {stardata.get('贵人星座')}"
             },
             "star1": {
-                "value": get_two_test(stardata.get('今日概述'))[0]
+                "value": star1
             },
             "star2": {
-                "value": get_two_test(stardata.get('今日概述'))[1]
+                "value": star2
+            },
+            "star3": {
+                "value": star3
             }
         }
     }
@@ -270,4 +274,3 @@ if __name__ == "__main__":
     users = config['user']
     for user in users:
         send_message(user, accessToken, _region, weather, temp, wind_dir, max_temp, min_temp, sunrise, sunset, category, pm2p5, proposal, chp, stardata)
-    print(stardata)
