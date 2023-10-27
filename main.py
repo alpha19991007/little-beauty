@@ -182,6 +182,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, ma
     print(chp)
     star1, star2 = get_two_test(stardata.get('今日概述'))
     star2, star3 = get_two_test(star2)
+    star3, star4 = get_two_test(star3)                
     data = {
         "touser": to_user,
         "template_id": config["template_id"],
@@ -230,6 +231,9 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, ma
             },
             "star3": {
                 "value": star3
+            }
+            "star4": {
+                "value": star4
             }
         }
     }
