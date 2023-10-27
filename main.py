@@ -199,7 +199,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, ma
                 "value": f"{min_temp} ～ {max_temp}"
             },
             "category": {
-                "value": f"{category} {wind_dir} pm2.5: {pm2p5}"
+                "value": f"{category} pm2.5: {pm2p5}"
             },
             "sun": {
                 "value": f"{sunrise} - {sunset}"
