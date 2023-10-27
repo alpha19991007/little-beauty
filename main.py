@@ -231,7 +231,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, ma
             },
             "star3": {
                 "value": star3
-            }
+            },
             "star4": {
                 "value": star4
             }
