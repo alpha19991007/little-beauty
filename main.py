@@ -182,7 +182,6 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, ma
     print(chp)
     star1, star2 = get_two_test(stardata.get('今日概述'))
     star2, star3 = get_two_test(star2)
-    star3, star4 = get_two_test(star3)                
     data = {
         "touser": to_user,
         "template_id": config["template_id"],
@@ -199,7 +198,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, ma
                 "value": f"{min_temp} ～ {max_temp}"
             },
             "category": {
-                "value": f"{category} pm2.5: {pm2p5}"
+                "value": f"{category} {wind_dir} pm2.5: {pm2p5}"
             },
             "sun": {
                 "value": f"{sunrise} - {sunset}"
@@ -231,9 +230,6 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, ma
             },
             "star3": {
                 "value": star3
-            },
-            "star4": {
-                "value": star4
             }
         }
     }
@@ -242,7 +238,7 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, ma
         # 获取距离下次生日的时间
         birth_day = get_birthday(value["birthday"], year, today)
         if birth_day == 0:
-            birthday_data = "{}生日哦，祝{}生日快乐！".format(
+            birthday_data = "今天{}生日哦，祝{}生日快乐！".format(
                 value["name"], value["name"])
         else:
             birthday_data = "距离{}的生日还有{}天".format(value["name"], birth_day)
