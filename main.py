@@ -1,6 +1,7 @@
 import unicodedata
 import os
 import sys
+pip install loguru
 from loguru import logger
 import requests
 import random
