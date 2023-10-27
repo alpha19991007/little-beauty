@@ -1,7 +1,5 @@
-import unicodedata
 import os
 import sys
-from loguru import logger
 import requests
 import random
 from datetime import datetime, date
@@ -17,7 +15,7 @@ def get_access_token():
         access_token = requests.get(post_url).json()['access_token']
         return access_token
     except Exception as err:
-        logger.error(f"获取access_token失败，请检查app_id和app_secret是否正确: {err}")
+        print(f"获取access_token失败，请检查app_id和app_secret是否正确: {err}")
 
 
 def get_config(configpath="./config.txt"):
@@ -26,10 +24,10 @@ def get_config(configpath="./config.txt"):
             global config
             config = eval(f.read())
     except FileNotFoundError:
-        logger.error("请检查config.txt文件是否与程序位于同一路径")
+        print("请检查config.txt文件是否与程序位于同一路径")
         sys.exit(1)
     except SyntaxError:
-        logger.error("请检查配置文件格式是否正确")
+        print("请检查配置文件格式是否正确")
         sys.exit(1)
 
 
@@ -42,7 +40,7 @@ def get_tianhang():
         chp = response["newslist"][0]["content"]
         return chp
     except Exception as err:
-        logger.error(err)
+        print(err)
 
 
 def get_star():
@@ -57,7 +55,7 @@ def get_star():
             _data[i.get('type')] = i.get('content')
         return _data
     except Exception as err:
-        logger.error(err)
+        print(err)
         return {}
 
 
@@ -87,10 +85,10 @@ def get_weather(region):
     region_url = f"https://geoapi.qweather.com/v2/city/lookup?location={region}&key={key}"
     response = requests.get(region_url, headers=headers).json()
     if response["code"] == "404":
-        logger.error("推送消息失败，请检查地区名是否有误！")
+        print("推送消息失败，请检查地区名是否有误！")
         return
     elif response["code"] == "401":
-        logger.error("推送消息失败，请检查和风天气key是否正确！")
+        print("推送消息失败，请检查和风天气key是否正确！")
         return
     else:
         # 获取地区的location--id
@@ -248,22 +246,22 @@ def send_message(to_user, access_token, region_name, weather, temp, wind_dir, ma
     }
     response = requests.post(url, headers=headers, json=data).json()
     if response["errcode"] == 40037:
-        logger.error("推送消息失败，请检查模板id是否正确")
+        print("推送消息失败，请检查模板id是否正确")
     elif response["errcode"] == 40036:
-        logger.error("推送消息失败，请检查模板id是否为空")
+        print("推送消息失败，请检查模板id是否为空")
     elif response["errcode"] == 40003:
-        logger.error("推送消息失败，请检查微信号是否正确")
+        print("推送消息失败，请检查微信号是否正确")
     elif response["errcode"] == 0:
-        logger.success("推送消息成功")
+        print("推送消息成功")
     else:
-        logger.warning(f"{response}")
+        print(f"{response}")
 
 
 if __name__ == "__main__":
     get_config()    # 读取配置文件
     accessToken = get_access_token()    # 获取access_token
     if not accessToken:
-        logger.error("获取accessToken 失败, 退出脚本")
+        print("获取accessToken 失败, 退出脚本")
         exit()
     _region = config["region"]
     weather, temp, max_temp, min_temp, wind_dir, sunrise, sunset, category, pm2p5, proposal = get_weather(_region)
